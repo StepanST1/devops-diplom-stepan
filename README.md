@@ -105,36 +105,33 @@ Yandex Cloud CLI 1.34.0
 
 ![img1](img/Screenshot_1.png)
 
-### Подготовка облачной инфраструктуры
+# Подготовка облачной инфраструктуры
 
-# Создайте новый репозиторий для Terraform‑конфигурации.
-```
-mkdir -p root/projects/devops-diplom
-cd root/projects/devops-diploma
-mkdir terraform ansible app
-```
+### Создайте новый репозиторий для Terraform‑конфигурации.
 
-# Скачайте и установите Terraform, если ранее этого не делали.
+Конфиграция Terraform https://github.com/StepanST1/devops-diplom-terraform
+
+### Скачайте и установите Terraform, если ранее этого не делали.
 `Terraform ранее был установлен`
 
-# Настройте аутентификацию Terraform в Yandex.Cloud (сервисный аккаунт, авторизационные данные)
-`Создам сервисный аккаунт с необходимыми правами для работы с облачной инфраструктурой, подготовим backend для Terraform, использовать будем S3-bucket:`
+### Настройте аутентификацию Terraform в Yandex.Cloud (сервисный аккаунт, авторизационные данные)
 
-`Для начала нужно создать сервисный аккаунт с правами editor`
+Для начала нужно создать сервисный аккаунт с правами editor
 ![img2](img/Screenshot_2.png)
 ![img3](img/Screenshot_3.png)
 
-`Далее создаем "Авторизованный ключ" для созданого сервисного аккаунта`
+Далее создаем "Авторизованный ключ" для созданого сервисного аккаунта
 ![img4](img/Screenshot_4.png)
 
-`И так же создадим "Статический ключ"`
+И так же создадим "Статический ключ"
 ![img6](img/Screenshot_6.png)
 
 `Переменные ACCESS_KEY и SECRET_KEY будут записаны в файл .env Эти переменные будут в экспортированы в оболочку рабочего окружения.`
 
-# Создайте S3‑bucket в Yandex.Cloud и настройте backend для хранения Terraform‑состояния.
+### Создайте S3‑bucket в Yandex.Cloud и настройте backend для хранения Terraform‑состояния.
 
 Теперь создадим S3-bucket
+
 ![img5](img/Screenshot_5.png)
 
 
@@ -155,13 +152,11 @@ backend "s3" {
 }
 ```
 
-# Опишите в Terraform создание VPC, подсети и виртуальной машины.
-
-Конфиграция Terraform https://github.com/StepanST1/devops-diplom-terraform
+### Опишите в Terraform создание VPC, подсети и виртуальной машины.
 
 Terraform создаёт следующие ресурсы в Yandex Cloud:
 
-| Ресурс | Имя / параметры | Назначение |
+| Ресурс | Имя / параметры |
 |---|---|---|
 | VPC | `diplom-network` | Изолированная виртуальная сеть |
 | Subnet | `diplom-network-subnet` | Подсеть `10.0.1.0/24` в зоне `ru-central1-a` |
@@ -182,7 +177,7 @@ Terraform создаёт следующие ресурсы в Yandex Cloud:
 - Availability zone: `ru-central1-a`
 - SSH user: `ubuntu`
 
-# Сетевые правила
+#### Сетевые правила
 
 Security Group содержит следующие правила:
 
@@ -192,7 +187,7 @@ Security Group содержит следующие правила:
 | Ingress | TCP | 80 | `0.0.0.0/0` |
 | Egress | Any | Все | `0.0.0.0/0` |
 
-# Проверьте конфигурацию командой terraform plan, затем примените её с помощью terraform apply.
+#### Проверьте конфигурацию командой terraform plan, затем примените её с помощью terraform apply.
 
 
 ```bash
@@ -206,5 +201,5 @@ terraform apply
 ```
 ![img7](img/Screenshot_7.png)
 
-# Убедитесь, что ВМ создана и доступна по SSH.
+### Убедитесь, что ВМ создана и доступна по SSH.
 ![img8](img/Screenshot_8.png)
