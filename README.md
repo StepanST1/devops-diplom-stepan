@@ -105,7 +105,7 @@ Yandex Cloud CLI 1.34.0
 
 ![img1](img/Screenshot_1.png)
 
-# Подготовка облачной инфраструктуры
+# 1. Подготовка облачной инфраструктуры
 
 ### Создайте новый репозиторий для Terraform‑конфигурации.
 
@@ -202,3 +202,48 @@ terraform apply
 
 ### Убедитесь, что ВМ создана и доступна по SSH.
 ![img8](img/Screenshot_8.png)
+
+# 2. Установка Docker на виртуальной машине
+
+
+* Подключитесь по SSH к созданной ВМ.
+* Установите Docker (и при необходимости Docker Compose):
+* **либо вручную по официальной инструкции; **
+* **либо подготовьте Ansible‑playbook и примените его. **
+* Проверьте, что Docker работает: выполните docker version и запустите тестовый контейнер.
+
+# Выполнение Ansible‑playbook
+
+Конфиграция Ansible https://github.com/StepanST1/devops-diplom-ansible
+
+Terraform после `apply` создаёт Ansible inventory с актуальным публичным IP VM. Это устраняет необходимость вручную переносить IP из Terraform в Ansible.
+
+
+#№ Ansible playbook выполняет следующие действия на VM:
+
+- устанавливает зависимости `ca-certificates`, `curl`, `gnupg`;
+- добавляет официальный Docker APT repository;
+- устанавливает Docker;
+- устанавливает Docker plugin;
+- устанавливает Docker Compose plugin;
+- запускает и включает Docker service;
+- добавляет пользователя `ubuntu` в группу `docker`;
+- проверяет доступность Docker
+
+### Проверка подключения
+
+```bash
+cd ansible
+ansible -i inventory/hosts.ini app -m ping
+```
+
+### Запуск playbook
+
+```bash
+ansible-playbook -i inventory/hosts.ini playbooks/docker.yml
+```
+
+![img9](img/Screenshot_9.png)
+
+### Проверка Docker
+![img10](img/Screenshot_10.png)
