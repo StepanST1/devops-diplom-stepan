@@ -109,7 +109,7 @@ Yandex Cloud CLI 1.34.0
 
 ### Создайте новый репозиторий для Terraform‑конфигурации.
 
-Конфиграция Terraform https://github.com/StepanST1/devops-diplom-terraform
+Конфиграция Terraform https://github.com/StepanST1/devops-diploma-terraform
 
 ### Скачайте и установите Terraform, если ранее этого не делали.
 `Terraform ранее был установлен`
@@ -219,7 +219,7 @@ terraform apply
 Terraform после `apply` создаёт Ansible inventory с актуальным публичным IP VM. Это устраняет необходимость вручную переносить IP из Terraform в Ansible.
 
 
-#№ Ansible playbook выполняет следующие действия на VM:
+## Ansible playbook выполняет следующие действия на VM:
 
 - устанавливает зависимости `ca-certificates`, `curl`, `gnupg`;
 - добавляет официальный Docker APT repository;
@@ -247,3 +247,47 @@ ansible-playbook -i inventory/hosts.ini playbooks/docker.yml
 
 ### Проверка Docker
 ![img10](img/Screenshot_10.png)
+
+# 3. Подготовка тестового приложения
+
+* Создайте отдельный репозиторий для тестового приложения.
+* Напишите простое приложение или статический сайт (можно на nginx), которое будет явно показывать, что деплой успешен (например, страница «DevOps диплом: ваше имя»).
+* Создайте Dockerfile для сборки образа приложения.
+* Создайте compose.yaml для запуска приложения через Docker Compose (если вам нужен больше чем один контейнер, например, приложение + БД).
+* Локально соберите образ и протестируйте его запуск.
+
+# Выполнение
+
+### Создайте отдельный репозиторий для тестового приложения.
+Конфиграция APP https://github.com/StepanST1/devops-diploma-app
+
+### Напишите простое приложение или статический сайт (можно на nginx), которое будет явно показывать, что деплой успешен (например, страница «DevOps диплом: ваше имя»).
+
+```html
+
+<html>
+<head>
+Netology DIPLOM
+</head>
+<body>
+<h1>DevOps диплом: Степан</h1>
+</body>
+</html>
+```
+
+### Создайте Dockerfile для сборки образа приложения.
+```# Шаг 1: Берем л образ Nginx Alpine Linux
+FROM nginx:1.27-alpine
+# Шаг 2: Удаляем дефолтную страницу Nginx
+RUN rm -rf /usr/share/nginx/html/*
+# Шаг 3: Копируем наш файл index.html в рабочую директорию веб-сервера
+COPY index.html /usr/share/nginx/html/index.html
+# Шаг 4: Открываем HTTP-порт 80 внутри контейнера
+EXPOSE 80
+# Шаг 5: Запускаем Nginx в фоновом режиме
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### Локально соберите образ и протестируйте его запуск.
+![img11](img/Screenshot_11.png)
+![img12](img/Screenshot_12.png)
