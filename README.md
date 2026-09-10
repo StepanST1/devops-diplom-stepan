@@ -92,7 +92,7 @@
 
 
 
-## Выполнение дипломного практикума:
+# Выполнение:
 
 `Для выполнения работы, будет использовать уже настроенную рабочую машину с ОС Debian GNU/Linux 12 (bookworm), со следующими компонентами:`
 ```
@@ -123,14 +123,13 @@ Yandex Cloud CLI 1.34.0
 Далее создаем "Авторизованный ключ" для созданого сервисного аккаунта
 ![img4](img/Screenshot_4.png)
 
-И так же создадим "Статический ключ"
+И так же создадим Статический ключ
 ![img6](img/Screenshot_6.png)
 
 `Переменные ACCESS_KEY и SECRET_KEY будут записаны в файл .env Эти переменные будут в экспортированы в оболочку рабочего окружения.`
 
 ### Создайте S3‑bucket в Yandex.Cloud и настройте backend для хранения Terraform‑состояния.
 
-Теперь создадим S3-bucket
 
 ![img5](img/Screenshot_5.png)
 
@@ -139,24 +138,24 @@ Yandex Cloud CLI 1.34.0
 
 providers.tf
 ```
-backend "s3" {
-  endpoint = "https://storage.yandexcloud.net"
-  bucket   = "bucket-diplom-terraform"
-  key      = "terraform/devops-diploma.tfstate"
-  region   = "ru-central1"
-
-  skip_region_validation      = true
-  skip_credentials_validation = true
-  skip_requesting_account_id  = true
-  skip_s3_checksum            = true
-}
+  backend "s3" {
+    endpoint                    = "https://storage.yandexcloud.net"
+    bucket                      = "bucket-diplom-terraform"
+    region                      = "ru-central1"
+    key                         = "state-terraform.tfstate"
+    
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    skip_requesting_account_id  = true 
+    skip_s3_checksum            = true 
+  }
 ```
 
 ### Опишите в Terraform создание VPC, подсети и виртуальной машины.
 
 Terraform создаёт следующие ресурсы в Yandex Cloud:
 
-| Ресурс | Имя / параметры |
+| Ресурс | Имя / параметры | Назначение |
 |---|---|---|
 | VPC | `diplom-network` | Изолированная виртуальная сеть |
 | Subnet | `diplom-network-subnet` | Подсеть `10.0.1.0/24` в зоне `ru-central1-a` |
@@ -181,13 +180,13 @@ Terraform создаёт следующие ресурсы в Yandex Cloud:
 
 Security Group содержит следующие правила:
 
-| Направление | Протокол | Порт | Источник / назначение | Назначение |
+| Направление | Протокол | Порт | Источник / назначение |
 |---|---|---:|---|---|
 | Ingress | TCP | 22 | `0.0.0.0/0` |
 | Ingress | TCP | 80 | `0.0.0.0/0` |
 | Egress | Any | Все | `0.0.0.0/0` |
 
-#### Проверьте конфигурацию командой terraform plan, затем примените её с помощью terraform apply.
+### Проверьте конфигурацию командой terraform plan, затем примените её с помощью terraform apply.
 
 
 ```bash
