@@ -277,3 +277,20 @@ CMD ["nginx", "-g", "daemon off;"]
 ### Локально соберите образ и протестируйте его запуск.
 ![img11](img/Screenshot_11.png)
 ![img12](img/Screenshot_12.png)
+
+## 3. Публикация образа в реестре
+
+### Соберите образ и отправьте его в реестр (docker push или через CI).
+
+Авторизуюсь в Docker Hub:
+![img13](img/Screenshot_13.png)
+
+Создадим Docker образ:
+![img14](img/Screenshot_14.png)
+
+Публикация созданный образ реестре Docker Hub:
+![img15](img/Screenshot_15.png)
+
+Проверка
+https://hub.docker.com/r/thebad1996/diplom-app
+![img16](img/Screenshot_16.png)
