@@ -3,6 +3,7 @@
 * [Описание проекта:](#описание-проекта)
   * [Инструкция по выполнению работы:](#инструкция-по-выполнению-работы)
   * [Решение:](#решение)
+  * [Финальная проверка:](#финальная-проверка)
 
 **Перед началом работы над дипломным заданием изучите [Инструкция по экономии облачных ресурсов](https://github.com/netology-code/devops-materials/blob/master/cloudwork.MD).**
 
@@ -320,24 +321,12 @@ ssh-keygen -t ed25519 \
 Дороботка playbooks чтобы Ansible добавлял SSH ключ для подлкючения GItHub на ВМ
 
 ```yaml
-   - name: Read GitHub  public key from local
-      ansible.builtin.lookup:
-        - file
-        - "{{ local_github_key_path }}"
-      register: github_pub_key
-      delegate_to: localhost
-      become: false
-
-    - name: Add GitHub Actions key to on VM
+    - name: Add GitHub Actions deploy public key to VM
       ansible.posix.authorized_key:
-        user: "{{ ansible_user }}"
+        user: "{{ docker_user }}"
         state: present
-        key: "{{ item }}"
-      loop: "{{ github_pub_key.results }}"
-    - name: Verify Docker
-      ansible.builtin.command: docker version --format '{{ "{{.Server.Version}}" }}'
-      register: docker_version
-      changed_when: false
+        key: "{{ lookup('ansible.builtin.file', local_github_key_path) }}"
+        manage_dir: true
 ```
 
 ### Создание Docker Hub token
@@ -372,5 +361,29 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
     <h1>DevOps диплом: Степан</h1>
   <p>CI/CD deployment: version 2</p>
 </body>
-</html>root@cicd:~/projects/devops-diplom/ansible# 
+</html>
 ```
+
+# Финальная проверка
+
+### Выполнение terraform destroy
+![img24](img/Screenshot_24.png)
+
+### Выполнение terraform apply и проверка SSH
+![img25](img/Screenshot_25.png)
+
+### Запуск Ansible и проверка входа
+![img27](img/Screenshot_27.png)
+
+### Замена Secret в репозитории GIT
+![img26](img/Screenshot_26.png)
+
+### Проверка CI/CD путем редактировния index и git push
+
+![img28](img/Screenshot_28.png)
+Git
+![img30](img/Screenshot_30.png)
+hub.docker
+![img31](img/Screenshot_31.png)
+VM
+![img32](img/Screenshot_32.png)
