@@ -251,12 +251,14 @@ ansible-playbook -i inventory/hosts.ini playbooks/docker.yml
 
 ```html
 
+<!DOCTYPE html>
 <html>
 <head>
-Netology DIPLOM
+    <meta charset="UTF-8">
+    <title>Netology DIPLOM</title>
 </head>
 <body>
-<h1>DevOps диплом: Степан</h1>
+    <h1>DevOps диплом: Степан</h1>
 </body>
 </html>
 ```
@@ -266,8 +268,9 @@ Netology DIPLOM
 FROM nginx:1.27-alpine
 # Шаг 2: Удаляем дефолтную страницу Nginx
 RUN rm -rf /usr/share/nginx/html/*
-# Шаг 3: Копируем наш файл index.html в рабочую директорию веб-сервера
+# Шаг 3: Копируем наш файлы в рабочую директорию веб-сервера
 COPY index.html /usr/share/nginx/html/index.html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # Шаг 4: Открываем HTTP-порт 80 внутри контейнера
 EXPOSE 80
 # Шаг 5: Запускаем Nginx в фоновом режиме
@@ -294,3 +297,80 @@ CMD ["nginx", "-g", "daemon off;"]
 Проверка
 https://hub.docker.com/r/thebad1996/diplom-app
 ![img16](img/Screenshot_16.png)
+
+## 5. Настройка CI/CD
+* В репозитории приложения создайте конфигурацию CI/CD (например, .github/workflows/ci‑cd.yml для GitHub Actions).
+* Добавьте шаги:
+* сборка Docker‑образа;
+* отправка образа в реестр;
+* деплой на ВМ (через SSH, Ansible или другой выбранный вами способ).
+* Настройте секреты (учётные данные для реестра и доступа к ВМ) в настройках репозитория.
+* Проверьте, что при коммите в ветку main pipeline успешно проходит и приложение обновляется на ВМ.
+
+Создание отдельно SSH ключа для GitHub Actions чтобы не использовать админский
+
+```bash
+ssh-keygen -t ed25519 \
+  -C "github-actions-deploy-diplom-app" \
+  -f /root/.ssh/github_actions_deploy \
+  -N ""
+  ```
+![img17](img/Screenshot_17.png)
+
+Дороботка playbooks чтобы Ansible добавлял SSH ключ для подлкючения GItHub на ВМ
+
+```yaml
+   - name: Read GitHub  public key from local
+      ansible.builtin.lookup:
+        - file
+        - "{{ local_github_key_path }}"
+      register: github_pub_key
+      delegate_to: localhost
+      become: false
+
+    - name: Add GitHub Actions key to on VM
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ item }}"
+      loop: "{{ github_pub_key.results }}"
+    - name: Verify Docker
+      ansible.builtin.command: docker version --format '{{ "{{.Server.Version}}" }}'
+      register: docker_version
+      changed_when: false
+```
+
+### Создание Docker Hub token
+
+![img18](img/Screenshot_18.png)
+
+### Заполнение secrets в GitHub
+![img19](img/Screenshot_19.png)
+
+### Внесение измений в код
+
+![img20](img/Screenshot_20.png)
+
+### Проверка в GitHub
+![img21](img/Screenshot_21.png)
+
+### Проверка в DockerHub
+![img22](img/Screenshot_22.png)
+
+### Проверка на VM
+![img23](img/Screenshot_23.png)
+
+```bash
+root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Netology DIPLOM</title>
+</head>
+<body>
+    <h1>DevOps диплом: Степан</h1>
+  <p>CI/CD deployment: version 2</p>
+</body>
+</html>root@cicd:~/projects/devops-diplom/ansible# 
+```
