@@ -97,6 +97,23 @@ Yandex Cloud CLI 1.34.0
 
 ![img1](img/Screenshot_1.png)
 
+### На локальной машине создать два SSH ключа
+
+
+#### Администраторский key — для Terraform/Ansible:
+```bash
+ssh-keygen -t ed25519 \
+  -C "admin-cicd" \
+  -f /root/.ssh/id_ed25519 \
+  -N ""
+```
+#### Deploy-key — только для GitHub Actions:
+```bash
+ssh-keygen -t ed25519 \
+  -C "github-actions-deploy-diplom-app" \
+  -f /root/.ssh/github_actions_deploy \
+  -N ""
+```
 ### 1. Подготовка облачной инфраструктуры
 
 ### Создайте новый репозиторий для Terraform‑конфигурации.
@@ -335,6 +352,14 @@ ssh-keygen -t ed25519 \
 
 ### Заполнение secrets в GitHub
 ![img19](img/Screenshot_19.png)
+
+| Имя секрета (Secret) | Описание |
+| :--- | :--- |
+| `DOCKERHUB_USERNAME` | Имя пользователя Docker Hub|
+| `DOCKERHUB_TOKEN` | Docker Hub Token |
+| `VM_HOST` |  IP-адрес  виртуальной машины|
+| `VM_USER` | Имя пользователя для подключения к ОС по SSH (по умолчанию: `ubuntu`). |
+| `VM_SSH_PRIVATE_KEY` | `/root/.ssh/github_actions_deploy`|
 
 ### Внесение измений в код
 
