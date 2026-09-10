@@ -372,7 +372,7 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 ### Выполнение terraform apply и проверка SSH
 ![img25](img/Screenshot_25.png)
 
-### Запуск Ansible и проверка входа
+### Запуск Ansible
 ![img27](img/Screenshot_27.png)
 
 ### Замена Secret в репозитории GIT
