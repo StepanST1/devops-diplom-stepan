@@ -381,9 +381,9 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 ### Проверка CI/CD путем редактировния index и git push
 
 ![img28](img/Screenshot_28.png)
-Git
+#### Git
 ![img30](img/Screenshot_30.png)
-hub.docker
+#### hub.docker
 ![img31](img/Screenshot_31.png)
-VM
+#### VM
 ![img32](img/Screenshot_32.png)
