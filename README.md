@@ -103,7 +103,7 @@ Git 2.39.5
 Yandex Cloud CLI 1.34.0
 ```
 
-![img1](\img\Screenshot_1.png)
+![img1](img/Screenshot_1.png)
 
 ### Подготовка облачной инфраструктуры
 
@@ -121,21 +121,21 @@ mkdir terraform ansible app
 `Создам сервисный аккаунт с необходимыми правами для работы с облачной инфраструктурой, подготовим backend для Terraform, использовать будем S3-bucket:`
 
 `Для начала нужно создать сервисный аккаунт с правами editor`
-![img2](\img\Screenshot_2.png)
-![img3](\img\Screenshot_3.png)
+![img2](img/Screenshot_2.png)
+![img3](img/Screenshot_3.png)
 
 `Далее создаем "Авторизованный ключ" для созданого сервисного аккаунта`
-![img4](\img\Screenshot_4.png)
+![img4](img/Screenshot_4.png)
 
 `И так же создадим "Статический ключ"`
-![img6](\img\Screenshot_6.png)
+![img6](img/Screenshot_6.png)
 
 `Переменные ACCESS_KEY и SECRET_KEY будут записаны в файл .env Эти переменные будут в экспортированы в оболочку рабочего окружения.`
 
 # Создайте S3‑bucket в Yandex.Cloud и настройте backend для хранения Terraform‑состояния.
 
 Теперь создадим S3-bucket
-![img5](\img\Screenshot_5.png)
+![img5](img/Screenshot_5.png)
 
 
 В результате данных действий  был создан сервисный аккаунт с правами для редактирования, статический ключ доступа и S3-bucket. 
@@ -192,11 +192,11 @@ Security Group содержит следующие правила:
 | Ingress | TCP | 80 | `0.0.0.0/0` |
 | Egress | Any | Все | `0.0.0.0/0` |
 
-### Запуск
+# Проверьте конфигурацию командой terraform plan, затем примените её с помощью terraform apply.
+
 
 ```bash
 
-```
 export AWS_ACCESS_KEY_ID="<static-access-key-id>"
 export AWS_SECRET_ACCESS_KEY="<static-secret-access-key>"
 
@@ -204,4 +204,7 @@ terraform init
 terraform plan
 terraform apply
 ```
-![img6](\img\Screenshot_6.png)
+![img7](img/Screenshot_7.png)
+
+# Убедитесь, что ВМ создана и доступна по SSH.
+![img8](img/Screenshot_8.png)
