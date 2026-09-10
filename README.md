@@ -335,7 +335,7 @@ ssh-keygen -t ed25519 \
   ```
 ![img17](img/Screenshot_17.png)
 
-Дороботка playbooks чтобы Ansible добавлял SSH ключ для подлкючения GItHub на ВМ
+Доработка playbooks чтобы Ansible добавлял SSH ключ для подключения GItHub на ВМ
 
 ```yaml
     - name: Add GitHub Actions deploy public key to VM
@@ -359,9 +359,9 @@ ssh-keygen -t ed25519 \
 | `DOCKERHUB_TOKEN` | Docker Hub Token |
 | `VM_HOST` |  IP-адрес  виртуальной машины|
 | `VM_USER` | Имя пользователя для подключения к ОС по SSH (по умолчанию: `ubuntu`). |
-| `VM_SSH_PRIVATE_KEY` | `/root/.ssh/github_actions_deploy`|
+| `VM_SSH_PRIVATE_KEY` | `~/.ssh/github_actions_deploy`|
 
-### Внесение измений в код
+### Внесение изменений в код
 
 ![img20](img/Screenshot_20.png)
 
