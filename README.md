@@ -394,7 +394,7 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 ### Выполнение terraform destroy
 ![img24](img/Screenshot_24.png)
 
-### Выполнение terraform apply и проверка SSH
+### Выполнение terraform apply
 ![img25](img/Screenshot_25.png)
 
 ### Запуск Ansible
@@ -407,7 +407,7 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 
 ![img28](img/Screenshot_28.png)
 #### Git
-![img30](img/Screenshot_30.png)
+![img29](img/Screenshot_30.png)
 #### hub.docker
 ![img31](img/Screenshot_31.png)
 #### VM
