@@ -114,6 +114,43 @@ ssh-keygen -t ed25519 \
   -f /root/.ssh/github_actions_deploy \
   -N ""
 ```
+
+### Расположение репозиториев
+
+Все три репозитория необходимо разместить в одной общей директории в следующей структуре:
+
+```text
+<project-directory>/
+├── terraform/
+│   └── infra/                 # Terraform repository
+│       ├── main.tf
+│       ├── variables.tf
+│       ├── outputs.tf
+│       └── ...
+├── ansible/                   # Ansible repository
+│   ├── inventory/
+│   │   └── hosts.ini           
+│   ├── playbooks/
+│   │   └── docker.yml
+│   └── requirements.yml
+└── app/                       # Application repository
+    ├── Dockerfile
+    ├── compose.yaml
+    └── .github/
+        └── workflows/
+            └── ci-cd.yml
+```
+
+Название `<project-directory>` произвольное. Например:
+```bash
+mkdir -p ~/PROJECT_DIRECTORY/terraform
+cd ~/PROJECT_DIRECTORY
+
+git clone https://github.com/StepanST1/devops-diploma-terraform.git terraform/infra
+git clone https://github.com/StepanST1/devops-diplom-ansible.git ansible
+git clone https://github.com/StepanST1/devops-diploma-app.git app
+```
+
 ### 1. Подготовка облачной инфраструктуры
 
 ### Создайте новый репозиторий для Terraform‑конфигурации.
