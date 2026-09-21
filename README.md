@@ -440,10 +440,24 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 ### Замена Secret в репозитории GIT
 ![img26](img/Screenshot_26.png)
 
-### Проверка CI/CD при git push в другую ветку
+### Проверка CI/CD 
+
+Для проверки выполнены два сценария:
+
+1. Push в test/feature branch:
+   - Docker image собирается и публикуется в Docker Hub;
+   - job `Deploy application to VM` пропускается (`Skipped`).
+
+2. Push в `main`:
+   - Docker image собирается и публикуется в Docker Hub;
+   - workflow подключается к VM;
+   - Docker Compose обновляет сервис `app`;
+   - HTTP health check подтверждает доступность приложения.
+   
+#### При git push в другую ветку
 ![img33](img/Screenshot_33.png)
 
-### Проверка CI/CD путем редактирования index и git push main
+#### При git push main
 ![img28](img/Screenshot_28.png)
 #### Git
 ![img29](img/Screenshot_30.png)
