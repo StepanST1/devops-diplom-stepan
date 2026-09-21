@@ -440,11 +440,14 @@ root@cicd:~/projects/devops-diplom/ansible# curl http://51.250.12.4/
 ### Замена Secret в репозитории GIT
 ![img26](img/Screenshot_26.png)
 
-### Проверка CI/CD путем редактировния index и git push
+### Проверка CI/CD при git push в другую ветку
+![img33](img/Screenshot_33.png)
 
+### Проверка CI/CD путем редактирования index и git push main
 ![img28](img/Screenshot_28.png)
 #### Git
 ![img29](img/Screenshot_30.png)
+
 #### hub.docker
 ![img31](img/Screenshot_31.png)
 #### VM
